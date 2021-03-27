@@ -89,7 +89,7 @@
     }),
     components: {
       'snackbar': require('@/components/Shared/Snackbar.vue').default,
-    }   
+    }    
   }
 </script>
 
