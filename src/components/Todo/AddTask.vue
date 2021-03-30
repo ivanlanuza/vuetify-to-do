@@ -3,16 +3,16 @@
         v-model="newTaskTitle"
         @keyup.enter="addTask"
         outlined
-        label="add a task"
-        class="pa-3"
+        placeholder="add a task"
+        class="pa-3 add-field"
         hide-details
         clearable
+        :name="Math.random()"
     >
         <template v-slot:append>
             <v-icon
                 @click="addTask"
                 :disabled="emptyTask"
-                color="primary"
             >
             mdi-plus
             </v-icon>
@@ -46,4 +46,7 @@
 </script>
 
 <style>
+    .add-field.v-input--is-focused .v-input__control {
+        background: rgba(31,94,129, 0.5) !important;
+    }
 </style>

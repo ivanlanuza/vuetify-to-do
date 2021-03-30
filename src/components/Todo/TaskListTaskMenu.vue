@@ -75,7 +75,19 @@ export default {
                 click() {
                     this.dialogs.delete = true;
                 }
-            }
+            },
+            { 
+                title: 'Sort', 
+                icon: 'mdi-drag-horizontal-variant',
+                click() {
+                    if (!this.$store.state.searchEntry){ 
+                        this.$store.commit('toggleSorting');
+                    }
+                    else {
+                        this.$store.commit('showSnackbar', 'Please remove search filter before sorting.')
+                    }
+                }
+            }            
         ],
     }),
     methods: {

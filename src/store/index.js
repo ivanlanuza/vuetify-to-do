@@ -1,11 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Localbase from 'localbase'
+
+let db = new Localbase('db')
+db.config.debug = false
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    appTitle: process.env.VUE_APP_TITLE,
+    searchEntry: null,
     tasks: [
+      /*
       {
         id: 1,
         title: 'Wake Up',
@@ -24,20 +31,23 @@ export default new Vuex.Store({
         done: false,
         dueDate: null
       },
+      */
     ],
     snackbar: {
       show: false,
       message: '',
-    }
+    },
+    sorting: false
   },
   mutations: {
-    addTask(state, newTaskTitle) {
-      let newTask = {
-        id: Date.now(),
-        title: newTaskTitle,
-        done: false,
-        dueDate: null
-      };
+    toggleSorting(state) {
+      state.sorting = !state.sorting;
+    },
+    setSearch(state, value) {
+      state.searchEntry = value;
+      console.log(state.searchEntry);
+    },
+    addTask(state, newTask) {
       state.tasks.push(newTask);
     },
     clickItem(state, id) {
@@ -59,6 +69,9 @@ export default new Vuex.Store({
       let task = state.tasks.filter(task => task.id === payload.id)[0]
       task.dueDate = payload.dueDate
     },    
+    setTasks(state, tasks) {
+      state.tasks = tasks;
+    },
     showSnackbar(state, newMessage) {
       let timeout = 0;
       if (state.snackbar.show) {
@@ -76,24 +89,61 @@ export default new Vuex.Store({
   },
   actions: {
     addTask({commit}, newTaskTitle, newMessage) {
-      commit('addTask', newTaskTitle);
-      commit('showSnackbar', 'Task added.');
+      let newTask = {
+        id: Date.now(),
+        title: newTaskTitle,
+        done: false,
+        dueDate: null
+      };
+      
+      db.collection('tasks').add(newTask).then( ()=> {
+        commit('addTask', newTask);
+        commit('showSnackbar', 'Task added.');
+      })
     },
+    clickItem({state, commit}, id) {
+      let task = state.tasks.filter(task => task.id === id)[0]
+      db.collection('tasks').doc({id:id}).update({done: !task.done}).then(()=>{
+        commit('clickItem', id)
+      })  
+    },    
     deleteTask({commit}, id) {
-      commit('deleteTask', id);
-      commit('showSnackbar', 'Task deleted.');
+      db.collection('tasks').doc({id:id}).delete().then(()=>{
+        commit('deleteTask', id);
+        commit('showSnackbar', 'Task deleted.');     
+      })  
     },
     editTask({commit}, payload) {
-      commit('editTask', payload);
-      commit('showSnackbar', 'Task edited.');      
+      db.collection('tasks').doc({id:payload.id}).update({title: payload.title}).then(()=>{
+        commit('editTask', payload);
+        commit('showSnackbar', 'Task edited.');   
+      })  
     },
     updateDueDate({commit}, payload) {
-      commit('updateDueDate', payload);
-      commit('showSnackbar', 'Due Date Changed.');      
+      db.collection('tasks').doc({id:payload.id}).update({dueDate: payload.dueDate}).then(()=>{
+        commit('updateDueDate', payload);
+        commit('showSnackbar', 'Due Date Changed.');
+      })        
+    },
+    setTasks({commit}, tasks) {
+      db.collection('tasks').set(tasks);
+      commit('setTasks', tasks)
+    },    
+    getTasks({commit}) {
+      db.collection('tasks').get().then(tasks => {
+        commit('setTasks', tasks);
+      })
     }
   },
   getters: {
-
+    taskFiltered(state) {
+      if(!state.searchEntry) {
+        return state.tasks
+      }
+        return state.tasks.filter(task => 
+          task.title.toLowerCase().includes(state.searchEntry.toLowerCase())
+        )
+    }
   },
   modules: {
   }

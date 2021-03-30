@@ -1,3 +1,3 @@
 export function myConsole() {
-    console.log('wower!')
+    //console.log('wowery!')
 }

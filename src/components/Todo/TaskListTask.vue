@@ -3,6 +3,8 @@
         <v-list-item
             @click="clickItem(task.id)"
             :class="{ 'grey lighten-3' : task.done }"
+            class="white"
+            :ripple="false"
         >
             <template v-slot:default>
                 <v-list-item-action>
@@ -26,9 +28,19 @@
 
                 </v-list-item-action>
 
-                <v-list-item-action>
+                <v-list-item-action v-if="!$store.state.sorting">
                     <task-menu :task="task"/>
                 </v-list-item-action>
+
+                <v-list-item-action v-if="$store.state.sorting">
+                    <v-btn
+                    color="primary"
+                    icon
+                    class="handle"
+                    >
+                    <v-icon>mdi-drag-horizontal-variant</v-icon>
+                    </v-btn>
+                </v-list-item-action>                
             </template>
         </v-list-item>  
         <v-divider></v-divider>
@@ -42,7 +54,7 @@ import { format } from 'date-fns'
 export default {
     methods: {
         clickItem(id) {
-            this.$store.commit('clickItem', id);
+            this.$store.dispatch('clickItem', id);
         },
     }, 
     filters: {
@@ -65,5 +77,10 @@ export default {
 </script>
 
 <style>
-
+    .sortable-ghost {
+        opacity: 0;
+    }
+    .sortable-drag {
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
 </style>
