@@ -19,14 +19,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/public',
-    name: 'Public',
-    component: () => import(/* webpackChunkName: "public" */ '../views/Public.vue')
+    path: '/noaccess',
+    name: 'No Access',
+    component: () => import(/* webpackChunkName: "public" */ '../views/NoAccess.vue')
   },  
   {
-    path: '/protected',
-    name: 'Protected',
-    component: () => import(/* webpackChunkName: "public" */ '../views/Protected.vue')
+    path: '/settings',
+    name: 'Settings',
+    component: () => import(/* webpackChunkName: "public" */ '../views/Settings.vue')
   }   
 ]
 
@@ -37,10 +37,10 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   document.title = `${ process.env.VUE_APP_TITLE} - ${ to.name}`
   var logIn = true
-  var protected_routes = ['Protected']
+  var protected_routes = ['Settings']
   if(logIn === false || protected_routes.includes(to["name"])){
     //console.log("Access not allowed.")
-    router.push("/public")
+    router.push("/noaccess")
   }  else {
     next()
   }

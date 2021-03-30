@@ -17,8 +17,8 @@
           class="mb-4"
         >
       </v-avatar>
-      <div class="text-subtitle-2 white--text">Ivan Lanuza</div>
-      <div class="text-caption white--text">icdlanuza@gmail.com</div>  
+      <div class="text-subtitle-2 white--text">Michael Scott</div>
+      <div class="text-caption white--text">michael@office.com</div>  
       
 
 
@@ -95,8 +95,8 @@ import Search from './components/Tools/Search.vue'
       drawer: null,
       items: [
         { title: 'To Do', icon: 'mdi-format-list-checks', to: "/" },
-        { title: 'Protected Page', icon: 'mdi-close-octagon', to: "/protected" },
         { title: 'About', icon: 'mdi-help-box', to: "/about" },
+        { title: 'Settings', icon: 'mdi-close-octagon', to: "/settings" },
       ]     
     }),
     components: {

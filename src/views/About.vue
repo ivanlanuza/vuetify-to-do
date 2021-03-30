@@ -1,7 +1,47 @@
 <template>
   <div class="about pa-6">
-    <h1>About {{ $store.state.appTitle }}</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <h2>About {{ $store.state.appTitle }}</h2>
+    <p>This simple To Do list is made using Vue.js.  Your data is protected and will not be saved in the cloud.  Your data will only stay in your local browser.  Web App works in mobile, tablet, and desktop devices</p>
+    <p>Full code repository can be found in: <a href="https://github.com/ivanlanuza/vuetify-to-do">https://github.com/ivanlanuza/vuetify-to-do</a></p>
+    <BR/>
+    <h4>Features Available:</h4>
+    <ul>
+      <li>Responsive UI design</li>
+      <li>Add Task</li>
+      <li>Edit Task with Dialog</li>
+      <li>Add due date to task with Date Picker</li>
+      <li>Delete Task with Modal</li>
+      <li>Sort Task Order with draggable</li>
+      <li>Filter/Search Tasks</li>
+      <li>Snackbar notifications</li>
+      <li>Drawer show/hide</li>
+      <li>Protected Settings Page</li>
+      <li>Public About Page</li>
+      <li>Show local time</li>
+      <li>State Management: Mutations, Actions, Getters, Setters, Computed</li>
+      <li>Local Browser Storage</li>
+    </ul>
+    <BR/><BR/>
+    <h4>Plug-ins Used:</h4>
+    <ul>
+      <li>vuex for state management</li>
+      <li>vue-router for easy routing</li>
+      <li>vuetify for UI components</li>
+      <li>date-fns for date formating</li>
+      <li>vuedraggable for item sorting</li>
+      <li>localbase for persistent storage</li>
+    </ul>
+    <BR/><BR/>
+    <h4>Missing Features:</h4>
+    <ul>
+      <li>Password Protection</li>
+      <li>Change Name/Avatar</li>
+      <li>Sync to cloud back-end</li>
+      <li>Hide completed tasks</li>
+      <li>Add tags/projects to tasks</li>
+      <li>Filter by Task Due Date</li>
+    </ul>
+
   </div>
 </template>
 
